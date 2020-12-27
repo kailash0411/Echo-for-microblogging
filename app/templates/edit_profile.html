@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block app_content %}
+<div class="container" style="color: #000000; width:50%;"> 
+    <h1 style="text-align: center; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">Edit your profile details</h1>
+<div class="row">
+    <div class="col-md-14">
+        {{ wtf.quick_form(form) }}
+    </div>
+</div>
+</div>
+{% endblock %}

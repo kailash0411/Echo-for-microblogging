@@ -1,0 +1,21 @@
+
+{% extends 'bootstrap/base.html' %}
+{% block content %}
+<div class="container" style="max-width:100%;width:100%;">
+    <div class="row">
+        <div class="col-md-4" style="font-size: 15; background-color:#1DA1F2; text-align: center; color:white; font-style:italic; font-family:sans-serif;
+        padding-top:17%;padding-bottom: 17%; width:50%"> 
+            <h1>Hello,</h1>
+            <p>This is a destination for microbloggers</p>
+        </div>
+        <div class="col-md-8" style="background-color:white;width:50%;color:black;font-family:sans-serif; font-style:unset; text-align: center; padding-top:17%;padding-bottom: 17%;">
+            <p>Would you like to join us?</p>
+            <p><a href="{{ url_for('auth.register') }}" type="button" role="button" data-focusable="true" class="btn btn-primary" style="border-radius: 20px;color: white;background-color: #1DA1F2;width:400px;text-align: center;">Sign up</a></p>
+            <p>Already a Member?</p>
+            <p><a href="{{ url_for('auth.login') }}" type="button" role="button" data-focusable="true" class="btn btn-primary" style="border-radius: 20px;background-color: white;color: #1DA1F2; text-align: center; width:400px">Login</a></p>
+        </div>
+    </div>
+    
+
+<p style="text-align: center;">&copy2020, Echo, inc. All rights reserverd</p>
+{% endblock %}
