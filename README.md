@@ -33,6 +33,6 @@ How to Use?
 * Play around with the app
 
 
-Feel free to write to amkuchbhi@gmail.com for your suggestions and comments
+Feel free to write to kailashyadav0411@gmail.com for your suggestions and comments
 
 
