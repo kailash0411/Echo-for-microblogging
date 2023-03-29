@@ -35,6 +35,11 @@ nosetests.xml
 .project
 .pydevproject
 
-venv
+
+*venv
 app.db
 echo.log*
+logs
+migrations
+*idea
+*flaskenv

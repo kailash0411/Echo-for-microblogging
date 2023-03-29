@@ -1,12 +1,11 @@
-<div class= container>
-    {% with messages = get_flashed_messages() %}
+
+{% with messages = get_flashed_messages() %}
     {% if messages %}
         {% for message in messages %}
             {% if last_message != message %}
-            <div class="alert alert-info" role="alert">{{ message }}</div>
+            <div class="alert alert-info" id="flash-message" role="alert">{{ message }}</div>
             {% endif %}
             {% set last_message = message %}
         {% endfor %}
     {% endif %}
-    {% endwith %}
-</div>
+{% endwith %}
