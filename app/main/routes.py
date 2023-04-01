@@ -5,8 +5,8 @@ from flask_login import current_user, login_required
 from flask_babel import _, get_locale
 #from guess_language import guess_language
 from app import db
-from app.main.forms import EditProfileForm, EmptyForm, PostForm, SearchForm
-from app.models import User, Post
+from app.main.forms import EditProfileForm, EmptyForm, PostForm, SearchForm, CommentForm
+from app.models import User, Post, Comment
 from app.translate import translate
 from app.main import bp
 
@@ -22,16 +22,49 @@ def before_request():
 @bp.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
-    form = PostForm()
-    if form.validate_on_submit():
-        post = Post(body=form.post.data, author=current_user)
+    post_form = PostForm()
+    if post_form.validate_on_submit():
+        post = Post(body=post_form.post.data, author=current_user)
         db.session.add(post)
         db.session.commit()
         flash('Your post is live now!')
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.view_post', post_id=post.id))
     posts = current_user.followed_posts()
-    return render_template('index.html', title='Home', posts=posts, form=form)
+    return render_template('index.html', title='Home', posts=posts, post_form=post_form)
 
+@bp.route('/posts/<int:post_id>', methods=['GET'])
+@login_required
+def view_post(post_id):
+    post = Post.query.get(post_id)
+    comments = Comment.query.filter_by(post_id=post_id).all()
+    return render_template('_post.html', post=post, comments=comments)
+
+@bp.route('/posts', methods=['GET', 'POST'])
+@login_required
+def add_post():
+    post_form = PostForm()
+    if post_form.validate_on_submit():
+        post = Post(body=post_form.post.data, author=current_user)
+        db.session.add(post)
+        db.session.commit()
+        flash('Your post is live now!')
+        return redirect(url_for('main.add_post'))
+    return render_template('_post.html')
+
+@bp.route('/add_comment/<int:post_id>', methods=['GET','POST'])
+@login_required
+def add_comment(post_id):
+    comment_form = CommentForm()
+    post = Post.query.get(post_id)
+    if comment_form.validate_on_submit():
+        comment = Comment(content=comment_form.comment.data, author=current_user, post=post)
+        db.session.add(comment)
+        db.session.commit()
+        flash('Your comment is live now!')
+        return redirect(url_for('main.index'))
+    comments = Comment.query.filter_by(post_id=post_id).all()
+    return render_template('_post.html', post=post, comment_form=comment_form , comments=comments)
+    
 @bp.route('/user/<username>')
 @login_required
 def user(username):

@@ -1,0 +1,17 @@
+<div class="container" >
+    <div class="card" style="display: flex; justify-content: left; float:left; 
+    border-radius: 20px; border: 1px solid #d2d5d6; max-width: 800px; min-width:200px; margin: 0px 0px 10px 0px">
+        <div class= "card-img" style="margin: 10px 0px 0px 10px">
+        <a href="{{ url_for('main.user', username=comment.author.username) }}">
+            <img src="{{ comment.author.avatar(50) }}" style="border-radius: 60px;">
+        </a>
+        </div>
+        <div class="card-body" style="margin: 0px 10px 0px 10px">
+        <a href="{{ url_for('main.user', username=comment.author.username) }}">
+            <h3 class="card-title">{{ comment.author.username }}</h3>
+        </a>
+        <p class="card-text">{{ comment.content }}</p>
+        <p class="card-text" style="font-size: smaller;">{{moment(comment.timestamp).fromNow()}}</p>
+        </div>
+    </div>
+</div>

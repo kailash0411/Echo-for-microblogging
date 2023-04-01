@@ -1,17 +1,36 @@
-<div class="container" >
-    <div class="card" style="display: flex; justify-content: left; float:left; 
-    border-radius: 20px; border: 1px solid #d2d5d6; max-width: 800px; min-width:200px; margin: 0px 0px 10px 0px">
-        <div class= "card-img" style="margin: 10px 0px 0px 10px">
+
+<div class='container'>
+    <div class="post" style="display: flex; justify-content: left; float:left; 
+    border-radius: 20px; border: 1px solid #d2d5d6; max-width: 800px; min-width:200px; margin: 10px 0px 0px 0px">
+        <div class= "post-img" style="margin: 10px 0px 0px 10px">
         <a href="{{ url_for('main.user', username=post.author.username) }}">
             <img src="{{ post.author.avatar(50) }}" style="border-radius: 60px;">
         </a>
         </div>
-        <div class="card-body" style="margin: 0px 10px 0px 10px">
+
+        <div class="post-body" style="margin: 0px 10px 0px 10px">
         <a href="{{ url_for('main.user', username=post.author.username) }}">
             <h3 class="card-title">{{ post.author.username }}</h3>
         </a>
         <p class="card-text">{{ post.body }}</p>
-        <p class="card-text" style="font-size: smaller;">{{moment(post.timestamp).fromNow()}}</p>
+        <p class="card-meta-text" style="font-size: smaller;">{{moment(post.timestamp).fromNow()}}</p>
+        <a href="{{ url_for('main.add_comment', post_id=post.id)}}" id="comment-link">comment</a>
+        {% if comment_form %}
+        <form action="", method='post'>
+            {{ comment_form.hidden_tag() }}
+            <p>
+                {{ comment_form.comment.label }}<br>
+                {{ comment_form.comment(cols=100, rows=2)}}<br>
+            </p>
+            <p>{{ comment_form.submit() }}</p>
+        </form>
+        {% endif %}
+        <ul>
+            {% for comment in post.comments %}
+              {%include '_comment.html' %}
+            {% endfor %}
+        </ul>
         </div>
     </div>
 </div>
+
